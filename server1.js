@@ -190,7 +190,7 @@ app.post('/create-room', (req, res) => {
 });
 //깃허브 추가되는지 확인 부분 리얼 확인부분
 //깃허브 브랜치 chatingprogramnode
-
+//깃허브 chatting에서 test폴더로 가져오고 다시 올려보기
 
 // 서버 시작
 server.listen(3000, () => {
