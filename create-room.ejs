@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Create Room</title>
+</head>
+<body>
+  <h1>Create Room</h1>
+  <form action="/create-room" method="POST">
+    <label for="roomName">Room Name:</label>
+    <input type="text" id="roomName" name="roomName" required>
+    <input type="hidden" name="name" value="<%= name %>">
+    <button type="submit">Create</button>
+  </form>
+</body>
+</html>
