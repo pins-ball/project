@@ -1,74 +1,8 @@
-<!-- signup.ejs -->
 <!DOCTYPE html>
 <html>
 <head>
   <meta charset="utf-8">
   <title>회원가입</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #f4f4f4;
-      margin: 0;
-      padding: 0;
-    }
-
-    h1 {
-      text-align: center;
-      margin-top: 50px;
-    }
-
-    form {
-      width: 300px;
-      margin: 0 auto;
-      background-color: #fff;
-      padding: 20px;
-      border-radius: 5px;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    }
-
-    label {
-      display: block;
-      font-weight: bold;
-      margin-bottom: 10px;
-    }
-
-    input[type="text"],
-    input[type="password"] {
-      width: 92.5%;
-      padding: 10px;
-      margin-bottom: 20px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-    }
-
-    input[type="submit"] {
-      width: 100%;
-      background-color: #4caf50;
-      color: #fff;
-      padding: 10px;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-    }
-
-    input[type="submit"]:hover {
-      background-color: #45a049;
-    }
-
-    #server-response {
-      text-align: center;
-      margin-top: 20px;
-    }
-
-    #server-response a {
-      color: #007bff;
-      text-decoration: none;
-    }
-
-    #server-response a:hover {
-      text-decoration: underline;
-    }
-  </style>
 </head>
 <body>
   <h1>회원가입</h1>
@@ -86,19 +20,19 @@
   <script>
     const form = document.getElementById('signup-form');
     const serverResponse = document.getElementById('server-response');
-  
+
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
-  
+
       const id = document.getElementById('id').value;
       const password = document.getElementById('password').value;
       const name = document.getElementById('name').value;
-  
+
       const formData = new FormData();
       formData.append('id', id);
       formData.append('password', password);
       formData.append('name', name);
-  
+
       const response = await fetch('/signup', {
         method: 'POST',
         headers: {
@@ -106,14 +40,16 @@
         },
         body: new URLSearchParams(formData)
       });
-  
+
+      const data = await response.json();
+
       if (response.ok) {
-        serverResponse.innerHTML = '회원가입이 완료되었습니다. <a href="/">로그인 화면으로 이동</a>';
+        serverResponse.textContent = `회원가입이 완료되었습니다. 사용자명: ${data.username}, 이름: ${data.name}`;
       } else {
         serverResponse.textContent = '회원가입에 실패했습니다.';
       }
     });
   </script>
-  
+
 </body>
 </html>
