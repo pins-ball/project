@@ -57,16 +57,16 @@ class mole @SuppressLint("UseCompatLoadingForDrawables") constructor(
     private var cnt5 = 0
     private var cnt6 = 0
     private var cnt7 = 0
-    private var cnt8 = 0 // ���ΰ��� �׸��� �����ϱ� ���� ����
+    private var cnt8 = 0 
     private var delaytime = 0
     private var delaytimesw = false
-    private var delaytime1 = 0 // ���ΰ� �׸� ����ӵ� ���� ����
-    private var delaytime1sw = false //�ð����� ����ġ
+    private var delaytime1 = 0 
+    private var delaytime1sw = false
     private var tccnt = 0
     private var delaytime2 = 0
-    private var delaytime2sw = false //�ð����� ����ġ
+    private var delaytime2sw = false 
     private var delaytime3 = 0
-    private var delaytime3sw = false //�ð����� ����ġ
+    private var delaytime3sw = false 
     private var delaytime4 = 0
     private var delaytime4sw = false
     private var enejwl = IntArray(9)
@@ -184,7 +184,6 @@ class mole @SuppressLint("UseCompatLoadingForDrawables") constructor(
             pa.textSize = 100f
             p.color = Color.LTGRAY
             pa.color = Color.LTGRAY
-            //Canvas.drawText("��ƾ�ð�"+time1+"��",220,340,p);
             Canvas.drawBitmap(bestscore!!.bitmap, 100f, 250f, null)
             Canvas.drawText("$spoint", 450f,350f,pa)
             Canvas.drawBitmap( score!!.bitmap, 100f, 100f, null)
@@ -457,7 +456,7 @@ class mole @SuppressLint("UseCompatLoadingForDrawables") constructor(
                     time = 0
                     if (spe == 0) {
                         spe = 2
-                    } //�ٽ��ϱ�
+                    }
                 }
             }
         }
