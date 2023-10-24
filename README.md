@@ -2,7 +2,7 @@
 
 개발 기간 2023.06 ~ 2023.08
 
-게임시작 화면
+      게임시작 화면
 ![main](https://github.com/pins-ball/project/assets/122430370/14ff182f-5a25-499a-ae31-1c01fc8e0e38)
 게임설정 화면
 ![option](https://github.com/pins-ball/project/assets/122430370/da01bb13-a679-470b-9fba-f023c2e036f7)<br/> 
