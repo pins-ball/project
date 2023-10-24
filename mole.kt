@@ -57,16 +57,16 @@ class mole @SuppressLint("UseCompatLoadingForDrawables") constructor(
     private var cnt5 = 0
     private var cnt6 = 0
     private var cnt7 = 0
-    private var cnt8 = 0 
+    private var cnt8 = 0
     private var delaytime = 0
     private var delaytimesw = false
-    private var delaytime1 = 0 
+    private var delaytime1 = 0
     private var delaytime1sw = false
     private var tccnt = 0
     private var delaytime2 = 0
-    private var delaytime2sw = false 
+    private var delaytime2sw = false
     private var delaytime3 = 0
-    private var delaytime3sw = false 
+    private var delaytime3sw = false
     private var delaytime4 = 0
     private var delaytime4sw = false
     private var enejwl = IntArray(9)
@@ -155,582 +155,530 @@ class mole @SuppressLint("UseCompatLoadingForDrawables") constructor(
             Canvas.drawBitmap(enltrnajd!!.bitmap, 520f, 620f, null)
             Canvas.drawBitmap(enejwl1[cnt5]!!.bitmap, 520f, enejwl[5].toFloat(), null)
             Canvas.drawBitmap(rnajd!!.bitmap, 520f, 700f, null)
-            Canvas.drawBitmap(enltrnajd!!.bitmap, 40f, 920f, null)
-            Canvas.drawBitmap(enejwl1[cnt6]!!.bitmap, 40f, enejwl[6].toFloat(), null)
+            Canvas.drawBitmap(enejwl1[cnt6]!!.bitmap, 40f, 920f, null)
             Canvas.drawBitmap(rnajd!!.bitmap, 40f, 1000f, null)
             Canvas.drawBitmap(enltrnajd!!.bitmap, 280f, 920f, null)
-            Canvas.drawBitmap(enejwl1[cnt7]!!.bitmap, 280f, enejwl[7].toFloat(), null)
+            Canvas.drawBitmap(enejwl1[cnt7]!!.bitmap, 280f, enejwl[6].toFloat(), null)
             Canvas.drawBitmap(rnajd!!.bitmap, 280f, 1000f, null)
             Canvas.drawBitmap(enltrnajd!!.bitmap, 520f, 920f, null)
-            Canvas.drawBitmap(enejwl1[cnt8]!!.bitmap, 520f, enejwl[8].toFloat(), null)
+            Canvas.drawBitmap(enejwl1[cnt8]!!.bitmap, 520f, enejwl[7].toFloat(), null)
             Canvas.drawBitmap(rnajd!!.bitmap, 520f, 1000f, null)
+            for (i in 0..7) {
+                if (enejwl[i] > 1500) {
+                    enejwl[i] = -100
+                }
+                if (enejwl[i] == -100) {
+                    enejwl[i] = 0
+                }
+            }
             p.textSize = 40f
-            p.color = Color.LTGRAY
-            //Canvas.drawText("xx"+ xx+ "yy"+yy,10,300,p );
-            Canvas.drawText("Score : $point", 400f, 150f, p)
-            Canvas.drawText("Best Scroe : $spoint", 400f, 100f, p)
-            if ((time * 0.005).toInt() < 3) {
-                Canvas.drawText((3 - time * 0.005).toInt().toString() + "초뒤 시작", 450f, 200f, p)
-            }
-            pre_save()
+            pa.color = Color.BLACK
+            Canvas.drawRect(0f, 0f, 720f, 320f, pa)
+            pa.color = Color.RED
+            Canvas.drawRect(0f, 200f, 720f, 250f, pa)
+            p.color = Color.WHITE
+            Canvas.drawText(point.toString() + "p", 40f, 150f, p)
+            Canvas.drawBitmap(score!!.bitmap, 200f, 0f, null)
+            Canvas.drawBitmap(bestscore!!.bitmap, 200f, 60f, null)
+            p.textSize = 30f
+            p.color = Color.WHITE
+            Canvas.drawText(spoint.toString() + "p", 400f, 40f, p)
+            p.color = Color.YELLOW
+            Canvas.drawText(time.toString(), 660f, 150f, p)
         }
-        if (X <= -400) {
-            X = -600.0
-            stage = 6
-            //spe=0;
+        if (stage == 6) {
+            enejwl_y3()
+            enejwl_y4()
             Canvas.drawBitmap(qorud!!.bitmap, 0f, 0f, null)
-            time1 = (time * 0.005).toInt()
-            p.textSize = 70f
-            pa.textSize = 100f
-            p.color = Color.LTGRAY
-            pa.color = Color.LTGRAY
-            Canvas.drawBitmap(bestscore!!.bitmap, 100f, 250f, null)
-            Canvas.drawText("$spoint", 450f,350f,pa)
-            Canvas.drawBitmap( score!!.bitmap, 100f, 100f, null)
-            Canvas.drawText("$point", 450f,200f,pa)
-
-            Canvas.drawBitmap(gameover!!.bitmap, 100f, 450f, null)
-            Canvas.drawBitmap(main!!.bitmap, 50f, 1100f, null)
-            Canvas.drawBitmap(restart!!.bitmap, 400f, 1100f, null)
-
-
-            //Canvas.drawText("xx"+ xx+ "yy"+yy,10,30,p );
-            enejwl_y()
-            enejwl_y1()
-            enejwl_y2()
-            //pre_save();
-        }
-        if (stagesnd == true) {
-            backsound!!.setVolume(0.5f, 0.5f)
-            if (sound_sw == 1) {
-                backsound!!.start()
-            } else {
-                backsound!!.pause()
+            Canvas.drawBitmap(pocket!!.bitmap, 110f, 150f, null)
+            p.color = Color.WHITE
+            p.textSize = 40f
+            Canvas.drawText("Game Over", 270f, 450f, p)
+            Canvas.drawBitmap(gameover!!.bitmap, 200f, 700f, null)
+            p.color = Color.WHITE
+            p.textSize = 40f
+            if(point > spoint){
+                Canvas.drawText("New High Score", 250f, 800f, p)
+                spoint = point
+                val editor = pref1.edit()
+                editor.putInt("score", spoint)
+                editor.apply()
             }
-            backsound!!.isLooping = true
-        }
-    }
-
-    public override fun onDetachedFromWindow() {
-        super.onDetachedFromWindow()
-        btnsound!!.stop()
-        btnsound!!.release()
-        btnsound = null
-        backsound!!.stop()
-        backsound!!.release()
-        backsound = null
-        var retry1 = true
-        thread1.isDaemon = false
-        while (retry1) {
-            try {
-                thread1.join()
-                retry1 = false
-            } catch (e: InterruptedException) {
+            if (point < spoint) {
+                p.color = Color.YELLOW
+                Canvas.drawText("BEST SCORE : " + spoint.toString() + "p", 230f, 700f, p)
+            }
+            else {
+                p.color = Color.WHITE
+                Canvas.drawText("BEST SCORE : " + spoint.toString() + "p", 230f, 700f, p)
             }
         }
     }
-
-    public override fun onWindowVisibilityChanged(visibility: Int) {
-        super.onWindowVisibilityChanged(visibility)
-        thread1_pause = if (visibility == VISIBLE) {
-            backsound!!.start()
-            false
-        } else {
-            backsound!!.pause()
-            true
-        }
-    }
-
-    override fun onTouchEvent(event: MotionEvent): Boolean {
-        xx = (event.x / Scale_X).toInt()
-        yy = (event.y / Scale_Y).toInt()
-        val rt = Rect()
-        if (event.action == MotionEvent.ACTION_DOWN) {
-            rt[200, 700, 500] = 835
-            if (stage == 0) {
-                if (rt.contains(xx, yy)) {
-                    if (spe == 1) {
-                        stage = 1
-                    }
-                    if (spe == 2) {
-                        stage = 2
-                    }
-                    if (spe == 3) {
-                        stage = 3
-                    }
-                    xx = 0
-                    yy = 0
-                }
+    private fun enejwlrandom(ennum: Int) {
+        rndnum = (Math.random() * 6000 + 1000).toInt()
+        rnum1 = (Math.random() * 3 + 1).toInt()
+        rnum2 = (Math.random() * 3 + 1).toInt()
+        rnum3 = (Math.random() * 3 + 1).toInt()
+        rnum4 = (Math.random() * 3 + 1).toInt()
+        if (ennum == 0) {
+            if (stage == 1) {
+                enejwl[ennum] = 320
+                enejwl[ennum] -= rnum1 * 100
+                cnt0 = 0
             }
-            rt[200, 900, 500] = 1035
-            if (rt.contains(xx, yy)) {
-                if (stage == 0) {
-                    stage = -1
-                    xx = 0
-                    yy = 0
-                }
+            if (stage == 2) {
+                enejwl[ennum] = 320
+                enejwl[ennum] -= rnum2 * 100
+                cnt0 = 0
             }
-            if (stage == -1) {
-                rt[200, 1100, 500] = 1235
-                if (rt.contains(xx, yy)) {
-                    stage = 0
-                }
-                rt[200, 900, 500] = 1035
-                if (rt.contains(xx, yy)) {
-                    sound_sw = if (sound_sw == 1) {
-                        0
-                    } else {
-                        1
-                    }
-                }
-                rt[200, 700, 500] = 835
-                if (rt.contains(xx, yy)) {
-                    if (speed == 1) {
-                        spe = 1
-                        stage = 0
-                        speed = 2
-                    } else if (speed == 2) {
-                        spe = 2
-                        stage = 0
-                        speed = 3
-                    } else if (speed == 3) {
-                        spe = 3
-                        stage = 0
-                        speed = 1
-                    }
-                } //느림
-                /* rt.set(200,700,500,835);
-                if(rt.contains(xx,yy)&&speed==2){
-                    spe =2;
-                    stage=0;
-                    speed=3;
-
-                }//중간
-                rt.set(200,700,500,835);
-                if(rt.contains(xx,yy)&&speed==3){
-                    spe =3;
-                    stage=0;
-                    speed=1;
-
-                }//빠름*/
+            if (stage == 3) {
+                enejwl[ennum] = 320
+                enejwl[ennum] -= rnum3 * 100
+                cnt0 = 0
             }
-            if (stage >= 1 && stage < 6) {
-                rt[40, 360, 200] = 480
-                if (rt.contains(xx, yy)) {
-                    if (enejwl[0] < 370) {
-                        //if(stagesnd==true){
-                        btnsound!!.seekTo(0)
-                        btnsound!!.start()
-                        /*}else{
-							btnsound.seekTo(0);
-							btnsound.stop();
-						}*/tccnt++
-                        cnt0 = 1
-                        num = 0
-                        pluscount()
-                        enejwlmove1(num)
-                    }
-                }
-                rt[280, 360, 440] = 480
-                if (rt.contains(xx, yy)) {
-                    if (enejwl[1] < 370) {
-                        btnsound!!.seekTo(0)
-                        btnsound!!.start()
-                        cnt1 = 1
-                        tccnt++
-                        num = 1
-                        pluscount()
-                        enejwlmove1(num)
-                    }
-                }
-                rt[520, 360, 680] = 480
-                if (rt.contains(xx, yy)) {
-                    if (enejwl[2] < 370) {
-                        btnsound!!.seekTo(0)
-                        btnsound!!.start()
-                        cnt2 = 1
-                        tccnt++
-                        num = 2
-                        pluscount()
-                        enejwlmove1(num)
-                    }
-                }
-                rt[40, 660, 200] = 780
-                if (rt.contains(xx, yy)) {
-                    if (enejwl[3] < 670) {
-                        btnsound!!.seekTo(0)
-                        btnsound!!.start()
-                        cnt3 = 1
-                        num = 3
-                        enejwlmove1(num)
-                        tccnt++
-                        pluscount()
-                    }
-                }
-                rt[280, 660, 440] = 780
-                if (rt.contains(xx, yy)) {
-                    if (enejwl[4] < 670) {
-                        btnsound!!.seekTo(0)
-                        btnsound!!.start()
-                        cnt4 = 1
-                        num = 4
-                        enejwlmove1(num)
-                        tccnt++
-                        pluscount()
-                    }
-                }
-                rt[520, 660, 680] = 780
-                if (rt.contains(xx, yy)) {
-                    if (enejwl[5] < 670) {
-                        btnsound!!.seekTo(0)
-                        btnsound!!.start()
-                        cnt5 = 1
-                        num = 5
-                        enejwlmove1(num)
-                        tccnt++
-                        pluscount()
-                    }
-                }
-                rt[40, 960, 200] = 1080
-                if (rt.contains(xx, yy)) {
-                    if (enejwl[6] < 970) {
-                        btnsound!!.seekTo(0)
-                        btnsound!!.start()
-                        cnt6 = 1
-                        num = 6
-                        enejwlmove1(num)
-                        tccnt++
-                        pluscount()
-                    }
-                }
-                rt[280, 960, 440] = 1080
-                if (rt.contains(xx, yy)) {
-                    if (enejwl[7] < 970) {
-                        btnsound!!.seekTo(0)
-                        btnsound!!.start()
-                        cnt7 = 1
-                        num = 7
-                        enejwlmove1(num)
-                        tccnt++
-                        pluscount()
-                    }
-                }
-                rt[520, 960, 680] = 1080
-                if (rt.contains(xx, yy)) {
-                    if (enejwl[8] < 970) {
-                        btnsound!!.seekTo(0)
-                        btnsound!!.start()
-                        cnt8 = 1
-                        num = 8
-                        enejwlmove1(num)
-                        tccnt++
-                        pluscount()
-                    }
-                }
+            if (stage == 4) {
+                enejwl[ennum] = 320
+                enejwl[ennum] -= rnum4 * 100
+                cnt0 = 0
             }
-            rt[50, 1100, 350] = 1250
-            if (rt.contains(xx, yy)) {
-                if (stage == 6) {
-                    pre_save()
-                    stage = 0
-                    X = 150.0
-                    point = 0
-                    time = 0
-                }
-            }
-            rt[400, 1100, 750] = 1250
-            if (rt.contains(xx, yy)) {
-                if (stage == 6) {
-                    pre_save()
-                    if (spe == 1) {
-                        stage = 1
-                    }
-                    if (spe == 2) {
-                        stage = 2
-                    }
-                    if (spe == 3) {
-                        stage = 3
-                    }
-                    X = 150.0
-                    point = 0
-                    time = 0
-                    if (spe == 0) {
-                        spe = 2
-                    }
-                }
+            if (stage == 5) {
+                enejwl[ennum] = 320
+                enejwl[ennum] -= rnum1 * 100
+                cnt0 = 0
             }
         }
-        return true
-    }
-
-    inner class BackThread : Thread() {
-        override fun run() {
-            while (retry) {
-                try {
-                    Handler1.sendEmptyMessage(0)
-                    sleep(5)
-                } catch (e: InterruptedException) {
-                }
+        if (ennum == 1) {
+            if (stage == 1) {
+                enejwl[ennum] = 320
+                enejwl[ennum] -= rnum2 * 100
+                cnt1 = 0
+            }
+            if (stage == 2) {
+                enejwl[ennum] = 320
+                enejwl[ennum] -= rnum3 * 100
+                cnt1 = 0
+            }
+            if (stage == 3) {
+                enejwl[ennum] = 320
+                enejwl[ennum] -= rnum4 * 100
+                cnt1 = 0
+            }
+            if (stage == 4) {
+                enejwl[ennum] = 320
+                enejwl[ennum] -= rnum1 * 100
+                cnt1 = 0
+            }
+            if (stage == 5) {
+                enejwl[ennum] = 320
+                enejwl[ennum] -= rnum2 * 100
+                cnt1 = 0
             }
         }
-    }
-
-    var Handler1: Handler = object : Handler() {
-        override fun handleMessage(msg: Message) {
-            if (msg.what == 0) {
-                if (stage >= 1 && stage < 6) {
-                    timecheck()
-                }
-                if (stage == 1 && (time * 0.005).toInt() > 3) {
-                    delaytime()
-                    enejwlmove()
-                    countdown()
-                }
-                if (stage == 2 && (time * 0.005).toInt() > 3) {
-                    delaytime1()
-                    enejwlmove1()
-                    countdown()
-                }
-                if (stage == 3 && (time * 0.005).toInt() > 3) {
-                    delaytime2()
-                    enejwlmove2()
-                    countdown()
-                }
-                /*else if(stage==4){
-					delaytime3();
-					enejwlmove3();
-					timecheck();
-					countdown();
-				}
-				else if(stage==5){
-					delaytime4();
-					enejwlmove4();
-					timecheck();
-					countdown();
-				}*/invalidate()
+        if (ennum == 2) {
+            if (stage == 1) {
+                enejwl[ennum] = 320
+                enejwl[ennum] -= rnum3 * 100
+                cnt2 = 0
+            }
+            if (stage == 2) {
+                enejwl[ennum] = 320
+                enejwl[ennum] -= rnum4 * 100
+                cnt2 = 0
+            }
+            if (stage == 3) {
+                enejwl[ennum] = 320
+                enejwl[ennum] -= rnum1 * 100
+                cnt2 = 0
+            }
+            if (stage == 4) {
+                enejwl[ennum] = 320
+                enejwl[ennum] -= rnum2 * 100
+                cnt2 = 0
+            }
+            if (stage == 5) {
+                enejwl[ennum] = 320
+                enejwl[ennum] -= rnum3 * 100
+                cnt2 = 0
+            }
+        }
+        if (ennum == 3) {
+            if (stage == 1) {
+                enejwl[ennum] = 320
+                enejwl[ennum] -= rnum4 * 100
+                cnt3 = 0
+            }
+            if (stage == 2) {
+                enejwl[ennum] = 320
+                enejwl[ennum] -= rnum1 * 100
+                cnt3 = 0
+            }
+            if (stage == 3) {
+                enejwl[ennum] = 320
+                enejwl[ennum] -= rnum2 * 100
+                cnt3 = 0
+            }
+            if (stage == 4) {
+                enejwl[ennum] = 320
+                enejwl[ennum] -= rnum3 * 100
+                cnt3 = 0
+            }
+            if (stage == 5) {
+                enejwl[ennum] = 320
+                enejwl[ennum] -= rnum4 * 100
+                cnt3 = 0
+            }
+        }
+        if (ennum == 4) {
+            if (stage == 1) {
+                enejwl[ennum] = 320
+                enejwl[ennum] -= rnum2 * 100
+                cnt4 = 0
+            }
+            if (stage == 2) {
+                enejwl[ennum] = 320
+                enejwl[ennum] -= rnum3 * 100
+                cnt4 = 0
+            }
+            if (stage == 3) {
+                enejwl[ennum] = 320
+                enejwl[ennum] -= rnum4 * 100
+                cnt4 = 0
+            }
+            if (stage == 4) {
+                enejwl[ennum] = 320
+                enejwl[ennum] -= rnum1 * 100
+                cnt4 = 0
+            }
+            if (stage == 5) {
+                enejwl[ennum] = 320
+                enejwl[ennum] -= rnum2 * 100
+                cnt4 = 0
+            }
+        }
+        if (ennum == 5) {
+            if (stage == 1) {
+                enejwl[ennum] = 320
+                enejwl[ennum] -= rnum3 * 100
+                cnt5 = 0
+            }
+            if (stage == 2) {
+                enejwl[ennum] = 320
+                enejwl[ennum] -= rnum4 * 100
+                cnt5 = 0
+            }
+            if (stage == 3) {
+                enejwl[ennum] = 320
+                enejwl[ennum] -= rnum1 * 100
+                cnt5 = 0
+            }
+            if (stage == 4) {
+                enejwl[ennum] = 320
+                enejwl[ennum] -= rnum2 * 100
+                cnt5 = 0
+            }
+            if (stage == 5) {
+                enejwl[ennum] = 320
+                enejwl[ennum] -= rnum3 * 100
+                cnt5 = 0
+            }
+        }
+        if (ennum == 6) {
+            if (stage == 1) {
+                enejwl[ennum] = 320
+                enejwl[ennum] -= rnum4 * 100
+                cnt6 = 0
+            }
+            if (stage == 2) {
+                enejwl[ennum] = 320
+                enejwl[ennum] -= rnum1 * 100
+                cnt6 = 0
+            }
+            if (stage == 3) {
+                enejwl[ennum] = 320
+                enejwl[ennum] -= rnum2 * 100
+                cnt6 = 0
+            }
+            if (stage == 4) {
+                enejwl[ennum] = 320
+                enejwl[ennum] -= rnum3 * 100
+                cnt6 = 0
+            }
+            if (stage == 5) {
+                enejwl[ennum] = 320
+                enejwl[ennum] -= rnum4 * 100
+                cnt6 = 0
+            }
+        }
+        if (ennum == 7) {
+            if (stage == 1) {
+                enejwl[ennum] = 320
+                enejwl[ennum] -= rnum3 * 100
+                cnt7 = 0
+            }
+            if (stage == 2) {
+                enejwl[ennum] = 320
+                enejwl[ennum] -= rnum4 * 100
+                cnt7 = 0
+            }
+            if (stage == 3) {
+                enejwl[ennum] = 320
+                enejwl[ennum] -= rnum1 * 100
+                cnt7 = 0
+            }
+            if (stage == 4) {
+                enejwl[ennum] = 320
+                enejwl[ennum] -= rnum2 * 100
+                cnt7 = 0
+            }
+            if (stage == 5) {
+                enejwl[ennum] = 320
+                enejwl[ennum] -= rnum3 * 100
+                cnt7 = 0
+            }
+        }
+        if (ennum == 8) {
+            if (stage == 1) {
+                enejwl[ennum] = 320
+                enejwl[ennum] -= rnum4 * 100
+                cnt8 = 0
+            }
+            if (stage == 2) {
+                enejwl[ennum] = 320
+                enejwl[ennum] -= rnum1 * 100
+                cnt8 = 0
+            }
+            if (stage == 3) {
+                enejwl[ennum] = 320
+                enejwl[ennum] -= rnum2 * 100
+                cnt8 = 0
+            }
+            if (stage == 4) {
+                enejwl[ennum] = 320
+                enejwl[ennum] -= rnum3 * 100
+                cnt8 = 0
+            }
+            if (stage == 5) {
+                enejwl[ennum] = 320
+                enejwl[ennum] -= rnum4 * 100
+                cnt8 = 0
             }
         }
     }
-
-    init {
-        spoint = maxpoint
-        main = context.resources.getDrawable(R.mipmap.mainmenu) as BitmapDrawable
-        restart = context.resources.getDrawable(R.mipmap.restartbutton) as BitmapDrawable
-        setting = context.resources.getDrawable(R.mipmap.settingbutton) as BitmapDrawable
-        start = context.resources.getDrawable(R.mipmap.gamesaterbutton) as BitmapDrawable
-        rank = context.resources.getDrawable(R.mipmap.rangkinbutton) as BitmapDrawable
-       // shop = context.resources.getDrawable(R.mipmap.shop) as BitmapDrawable
-       // end = context.resources.getDrawable(R.mipmap.end) as BitmapDrawable
-        enejwl1[1] = context.resources.getDrawable(R.mipmap.enejwldkdnt) as BitmapDrawable
-        enejwl1[0] = context.resources.getDrawable(R.mipmap.enejwl1) as BitmapDrawable
-        enejwl2 = context.resources.getDrawable(R.mipmap.enejwl1) as BitmapDrawable
-        rnajd = context.resources.getDrawable(R.mipmap.enejwl) as BitmapDrawable
-        enltrnajd = context.resources.getDrawable(R.mipmap.enltrnajd) as BitmapDrawable
-        slow = context.resources.getDrawable(R.mipmap.slowbutton) as BitmapDrawable
-        middle = context.resources.getDrawable(R.mipmap.middlebutton) as BitmapDrawable
-        fast = context.resources.getDrawable(R.mipmap.fastbutton) as BitmapDrawable
-        qorud = context.resources.getDrawable(R.mipmap.wksel) as BitmapDrawable
-        pocket = context.resources.getDrawable(R.mipmap.pocket) as BitmapDrawable
-        gameover = context.resources.getDrawable(R.mipmap.gameover) as BitmapDrawable
-        music = context.resources.getDrawable(R.mipmap.musicbutton) as BitmapDrawable
-        musicstop = context.resources.getDrawable(R.mipmap.musicstop) as BitmapDrawable
-        score = context.resources.getDrawable(R.mipmap.score) as BitmapDrawable
-        bestscore = context.resources.getDrawable(R.mipmap.bestscore) as BitmapDrawable
-        _context = context
-        stagesnd = true
-        backsound = MediaPlayer.create(_context, R.raw.country)
-        btnsound = MediaPlayer.create(_context, R.raw.touch)
-        thread1.isDaemon = true
-        thread1.start()
-    }
-
-    private fun enejwlrandom(cnt: Int) {
-        val rnd = Random()
-        rndnum = rnd.nextInt(1) + 150
-        rndnum1 = rnd.nextInt(1) + 100
-        rndnum2 = rnd.nextInt(1) + 70
-        //rndnum3 = rnd.nextInt(1)+50;
-        //rndnum4 = rnd.nextInt(1)+35;
-        rnum1 = rnd.nextInt(3)
-        rnum2 = rnd.nextInt(3) + 3
-        rnum3 = rnd.nextInt(3) + 6
-        rnum4 = rnd.nextInt(9)
-    }
-
-    private fun enejwlmove() {
-        if (delaytimesw == true) {
-            enejwlm()
-        }
-    }
-
-    private fun enejwlmove1() {
-        if (delaytime1sw == true) {
-            enejwlm()
-        }
-    }
-
-    private fun enejwlmove2() {
-        if (delaytime2sw == true) {
-            enejwlm()
-        }
-    }
-
-    private fun enejwlmove3() {
-        if (delaytime3sw == true) {
-            enejwlm()
-        }
-    }
-
-    private fun enejwlmove4() {
-        if (delaytime4sw == true) {
-            enejwlm()
-        }
-    }
-
-    private fun enejwlmove1(n: Int) {
-        enejwl[n] += 70
-    }
-
-    private fun enejwlm() {
-        enejwl[rnum1] -= 70
-        enejwl[rnum2] -= 70
-        enejwl[rnum3] -= 70
-        cnt0 = 0
-        cnt1 = 0
-        cnt2 = 0
-        cnt3 = 0
-        cnt4 = 0
-        cnt5 = 0
-        cnt6 = 0
-        cnt7 = 0
-        cnt8 = 0
-        if (enejwl[rnum1] < 360) {
-            enejwl_y()
-        }
-        if (enejwl[rnum2] < 660) {
-            enejwl_y1()
-        }
-        if (enejwl[rnum3] < 960) {
-            enejwl_y2()
-        }
-    }
-
     private fun enejwl_y() {
-        enejwl[0] = 430
-        enejwl[1] = 430
-        enejwl[2] = 430
+        if (stage >= 1) {
+            if (delaytime < rndnum) {
+                delaytime++
+                return
+            }
+            for (i in 0..7) {
+                if (i == 0) {
+                    enejwl[i] += 1
+                }
+                if (i == 1) {
+                    enejwl[i] += 2
+                }
+                if (i == 2) {
+                    enejwl[i] += 3
+                }
+                if (i == 3) {
+                    enejwl[i] += 4
+                }
+                if (i == 4) {
+                    enejwl[i] += 5
+                }
+                if (i == 5) {
+                    enejwl[i] += 6
+                }
+                if (i == 6) {
+                    enejwl[i] += 7
+                }
+                if (i == 7) {
+                    enejwl[i] += 8
+                }
+                if (enejwl[i] > 1400) {
+                    enejwl[i] = -100
+                    if (delaytimesw == false) {
+                        delaytimesw = true
+                        delaytime1 = 0
+                    }
+                }
+                if (i == 0) {
+                    if (delaytime1 < 2000) {
+                        delaytime1++
+                        return
+                    }
+                    delaytimesw = false
+                }
+                if (i == 1) {
+                    if (delaytime1 < 1600) {
+                        delaytime1++
+                        return
+                    }
+                    delaytimesw = false
+                }
+                if (i == 2) {
+                    if (delaytime1 < 1200) {
+                        delaytime1++
+                        return
+                    }
+                    delaytimesw = false
+                }
+                if (i == 3) {
+                    if (delaytime1 < 800) {
+                        delaytime1++
+                        return
+                    }
+                    delaytimesw = false
+                }
+                if (i == 4) {
+                    if (delaytime1 < 400) {
+                        delaytime1++
+                        return
+                    }
+                    delaytimesw = false
+                }
+                if (i == 5) {
+                    if (delaytime1 < 200) {
+                        delaytime1++
+                        return
+                    }
+                    delaytimesw = false
+                }
+                if (i == 6) {
+                    if (delaytime1 < 100) {
+                        delaytime1++
+                        return
+                    }
+                    delaytimesw = false
+                }
+                if (i == 7) {
+                    if (delaytime1 < 50) {
+                        delaytime1++
+                        return
+                    }
+                    delaytimesw = false
+                }
+            }
+        }
     }
-
     private fun enejwl_y1() {
-        enejwl[3] = 730
-        enejwl[4] = 730
-        enejwl[5] = 730
+        if (stage >= 2) {
+            if (delaytime2 < rndnum) {
+                delaytime2++
+                return
+            }
+            for (i in 0..7) {
+                if (i == 0) {
+                    enejwl[i] += 1
+                }
+                if (i == 1) {
+                    enejwl[i] += 2
+                }
+                if (i == 2) {
+                    enejwl[i] += 3
+                }
+                if (i == 3) {
+                    enejwl[i] += 4
+                }
+                if (i == 4) {
+                    enejwl[i] += 5
+                }
+                if (i == 5) {
+                    enejwl[i] += 6
+                }
+                if (i == 6) {
+                    enejwl[i] += 7
+                }
+                if (i == 7) {
+                    enejwl[i] += 8
+                }
+                if (enejwl[i] > 1400) {
+                    enejwl[i] = -100
+                    if (delaytime2sw == false) {
+                        delaytime2sw = true
+                        delaytime2 = 0
+                    }
+                }
+                if (i == 0) {
+                    if (delaytime2 < 2000) {
+                        delaytime2++
+                        return
+                    }
+                    delaytime2sw = false
+                }
+                if (i == 1) {
+                    if (delaytime2 < 1600) {
+                        delaytime2++
+                        return
+                    }
+                    delaytime2sw = false
+                }
+                if (i == 2) {
+                    if (delaytime2 < 1200) {
+                        delaytime2++
+                        return
+                    }
+                    delaytime2sw = false
+                }
+                if (i == 3) {
+                    if (delaytime2 < 800) {
+                        delaytime2++
+                        return
+                    }
+                    delaytime2sw = false
+                }
+                if (i == 4) {
+                    if (delaytime2 < 400) {
+                        delaytime2++
+                        return
+                    }
+                    delaytime2sw = false
+                }
+                if (i == 5) {
+                    if (delaytime2 < 200) {
+                        delaytime2++
+                        return
+                    }
+                    delaytime2sw = false
+                }
+                if (i == 6) {
+                    if (delaytime2 < 100) {
+                        delaytime2++
+                        return
+                    }
+                    delaytime2sw = false
+                }
+                if (i == 7) {
+                    if (delaytime2 < 50) {
+                        delaytime2++
+                        return
+                    }
+                    delaytime2sw = false
+                }
+            }
+        }
     }
-
     private fun enejwl_y2() {
-        enejwl[6] = 1030
-        enejwl[7] = 1030
-        enejwl[8] = 1030
-    }
-
-    private fun delaytime() {
-        if (delaytime < rndnum) {
-            delaytimesw = false
-            delaytime++
-        }
-        if (delaytime == rndnum) {
-            delaytimesw = true
-            delaytime = 0
-        }
-    }
-
-    private fun delaytime1() {
-        if (delaytime1 < rndnum1) {
-            delaytime1sw = false
-            delaytime1++
-        }
-        if (delaytime1 == rndnum1) {
-            delaytime1sw = true
-            delaytime1 = 0
-        }
-    }
-
-    private fun delaytime2() {
-        if (delaytime2 < rndnum2) {
-            delaytime2sw = false
-            delaytime2++
-        }
-        if (delaytime2 == rndnum2) {
-            delaytime2sw = true
-            delaytime2 = 0
-        }
-    }
-
-    private fun delaytime3() {
-        if (delaytime3 < rndnum3) {
-            delaytime3sw = false
-            delaytime3++
-        }
-        if (delaytime3 == rndnum3) {
-            delaytime3sw = true
-            delaytime3 = 0
-        }
-    }
-
-    private fun delaytime4() {
-        if (delaytime4 < rndnum4) {
-            delaytime4sw = false
-            delaytime4++
-        }
-        if (delaytime4 == rndnum4) {
-            delaytime4sw = true
-            delaytime4 = 0
-        }
-    }
-
-    private fun timecheck() {
-        time++
-    }
-
-    private fun countdown() {
-        ctime--
-        if (stage == 1 || stage == 2 || stage == 3) {
-            if (X >= -400) {
-                X -= 0.2
-            } else {
-                X = -400.0
+        if (stage >= 3) {
+            if (delaytime3 < rndnum) {
+                delaytime3++
+                return
             }
-            if (X <= 170) {
-                X -= 0.2
-            } else {
-                X = 170.0
-            }
-        }
-    }
-
-    private fun pluscount() {
-        if (spe == 1) {
-            X += 30.0
-            point += 30
-        }
-        if (spe == 2) {
-            X += 40.0
-            point += 40
-        }
-        if (spe == 3) {
-            X += 40.0
-            point += 60
-        }
-    }
-
-    fun pre_save() {
-        val edit = pref1.edit()
-        if (spoint >= point) {
-            edit.putInt("maxjumsu", spoint)
-        } else if (spoint < point) {
-            edit.putInt("maxjumsu", point)
-            spoint = point
-        }
-        edit.commit()
-    }
-}
+            for (i in 0..7) {
+                if (i == 0) {
+                    enejwl[i] += 1
+                }
+                if (i == 1) {
+                    enejwl[i] += 2
+                }
+                if (i == 2) {
+                    enejwl[i] += 3
+                }
+                if (i == 3) {
+                    enejwl[i] += 4
+                }
+                if (i == 4) {
+                    enejwl[i] += 5
+                }
+                if (i == 5) {
+                    en
